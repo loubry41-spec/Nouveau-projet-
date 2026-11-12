@@ -22,9 +22,14 @@ Clique sur « Imprimer l'affiche » pour obtenir une feuille A4 à coller ou dis
 
 ## Mettre en ligne (gratuit) avec GitHub Pages
 
-1. Sur GitHub : **Settings → Pages**.
-2. Source : *Deploy from a branch*, branche `main`, dossier `/ (root)`.
-3. L'app sera accessible à `https://<ton-compte>.github.io/<nom-du-depot>/decouvrir-jesus/`.
+1. Sur GitHub, ouvre le dépôt puis **Settings → Pages**.
+2. *Source* : **Deploy from a branch**.
+3. *Branch* : choisis la branche qui contient le dossier `decouvrir-jesus` (`main` une fois fusionnée,
+   ou directement `claude/vibrant-hamilton-tmxp5l`), dossier **/ (root)**, puis **Save**.
+4. Attends 1 à 2 minutes : l'app est en ligne à
+   https://loubry41-spec.github.io/Nouveau-projet-/decouvrir-jesus/
+
+C'est cette adresse que contient le QR code de l'affiche.
 
 Partage ce lien (ou un QR code de ce lien) : sur téléphone, on peut l'ajouter à l'écran d'accueil
 (« Ajouter à l'écran d'accueil ») et elle s'ouvre comme une vraie application.

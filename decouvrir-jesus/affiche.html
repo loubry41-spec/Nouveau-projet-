@@ -46,7 +46,9 @@
   </div>
 <script>
   const champ = document.getElementById("adresse");
-  champ.value = new URL("./", location.href).href;
+  // Adresse publique de l'application (GitHub Pages). Change-la si tu héberges l'app ailleurs.
+  const ADRESSE_PUBLIQUE = "https://loubry41-spec.github.io/Nouveau-projet-/decouvrir-jesus/";
+  champ.value = location.hostname.endsWith("github.io") ? new URL("./", location.href).href : ADRESSE_PUBLIQUE;
   const zone = document.getElementById("qr");
   function dessiner() {
     const qr = qrcode(0, "M");
