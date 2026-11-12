@@ -1,0 +1,14 @@
+{
+  "name": "Découvrir Jésus",
+  "short_name": "Jésus",
+  "description": "Des vidéos sur Instagram ou la Bible, en un clic.",
+  "lang": "fr",
+  "start_url": "./",
+  "scope": "./",
+  "display": "standalone",
+  "background_color": "#0e1a1f",
+  "theme_color": "#0e1a1f",
+  "icons": [
+    { "src": "icon.svg", "sizes": "any", "type": "image/svg+xml", "purpose": "any maskable" }
+  ]
+}
