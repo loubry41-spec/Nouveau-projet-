@@ -10,7 +10,15 @@ Dans `index.html`, en bas du fichier, modifie :
 ```js
 const LIEN_INSTAGRAM = "https://www.instagram.com/tonpseudo/";
 const LIEN_BIBLE = "https://www.biblegateway.com/passage/?search=Jean+1&version=LSG";
+const EGLISE = { nom: "...", infos: "adresse · horaires", lien: "https://..." };
 ```
+
+Tant que `EGLISE.nom` est vide, la partie « église locale » reste cachée.
+
+## Affiche avec QR code
+
+Ouvre `affiche.html` (une fois l'app en ligne) : le QR code pointe automatiquement vers l'app.
+Clique sur « Imprimer l'affiche » pour obtenir une feuille A4 à coller ou distribuer.
 
 ## Mettre en ligne (gratuit) avec GitHub Pages
 

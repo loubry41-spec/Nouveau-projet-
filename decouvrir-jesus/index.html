@@ -11,7 +11,7 @@
 <link rel="apple-touch-icon" href="icon.svg">
 <meta name="apple-mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-title" content="Découvrir Jésus">
-<style>:root{padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)} body{margin:0} img{max-width:100%}</style>
+<style>:root{padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)} body{margin:0} img{max-width:100%} [hidden]{display:none!important}</style>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Literata:opsz,wght@7..72,500;7..72,700&family=Figtree:wght@400;500;600&display=swap">
@@ -105,6 +105,17 @@
   .ref { font-family: var(--font-display); font-weight: 700; font-variant-numeric: tabular-nums; transition: color .15s ease; }
   .what { color: var(--muted); font-size: .95rem; }
 
+  .who { display: flex; flex-direction: column; gap: .7rem; }
+  .who p { margin: 0; max-width: 65ch; }
+  .church {
+    display: flex; flex-direction: column; gap: .4rem;
+    padding: 1.2rem; border-radius: 18px; background: var(--surface); border: 1.5px solid var(--line);
+  }
+  .church p { margin: 0; }
+  .church-name { font-weight: 600; font-size: 1.1rem; }
+  .church-info { color: var(--muted); }
+  .church-link { color: var(--gold); font-weight: 600; text-decoration: none; align-self: flex-start; }
+  .church-link:hover { text-decoration: underline; }
   .verse { margin: 0; padding: 1.4rem 0 0; border-top: 2px solid var(--gold); }
   .verse p { margin: 0 0 .5rem; font-family: var(--font-display); font-size: 1.3rem; line-height: 1.4; text-wrap: balance; }
   .verse cite { font-style: normal; font-size: .85rem; letter-spacing: .04em; color: var(--muted); }
@@ -144,6 +155,13 @@
     </a>
   </nav>
 
+  <section class="who" aria-labelledby="titre-qui">
+    <h2 id="titre-qui">Qui est Jésus&nbsp;?</h2>
+    <p>Jésus a vécu il y a environ 2&nbsp;000 ans en Israël. Il guérissait les malades, mangeait avec les exclus et parlait de Dieu comme d'un Père qui aime.</p>
+    <p>Les chrétiens croient qu'il est le Fils de Dieu. Il est mort sur une croix, puis il est ressuscité le troisième jour. Par lui, Dieu offre le pardon et une vie nouvelle à tous, quel que soit leur passé.</p>
+    <p>Il n'y a pas de formule compliquée. On peut lui parler simplement, avec ses propres mots, comme à quelqu'un qui écoute.</p>
+  </section>
+
   <section class="start" aria-labelledby="titre-debut">
     <h2 id="titre-debut">Par où commencer&nbsp;?</h2>
     <p class="hint">Quatre passages courts, choisis pour quelqu'un qui découvre.</p>
@@ -153,6 +171,13 @@
       <li><a href="https://www.biblegateway.com/passage/?search=Psaume+23&amp;version=LSG" target="_blank" rel="noopener"><span class="ref">Psaume 23</span><span class="what">« L'Éternel est mon berger »</span></a></li>
       <li><a href="https://www.biblegateway.com/passage/?search=Matthieu+11%3A28-30&amp;version=LSG" target="_blank" rel="noopener"><span class="ref">Matthieu 11.28–30</span><span class="what">Une invitation au repos</span></a></li>
     </ul>
+  </section>
+
+  <section class="church" id="eglise" aria-labelledby="titre-eglise" hidden>
+    <h2 id="titre-eglise">Rencontrer des chrétiens près de chez toi</h2>
+    <p class="church-name" id="eglise-nom"></p>
+    <p class="church-info" id="eglise-infos"></p>
+    <a class="church-link" id="eglise-lien" href="#" target="_blank" rel="noopener" hidden>Voir l'église →</a>
   </section>
 
   <blockquote class="verse">
@@ -169,9 +194,24 @@
   const LIEN_INSTAGRAM = "https://www.instagram.com/";
   // Lien du bouton « Lire la Bible »
   const LIEN_BIBLE = "https://www.biblegateway.com/passage/?search=Jean+1&version=LSG";
+  // Église locale (laisse "nom" vide pour cacher cette partie)
+  const EGLISE = {
+    nom: "",      // ex. "Église évangélique de ..."
+    infos: "",    // ex. "12 rue ..., 75000 Paris · Culte le dimanche à 10h30"
+    lien: ""      // ex. site web ou page Google Maps
+  };
   // ===========================
   document.getElementById("lien-instagram").href = LIEN_INSTAGRAM;
   document.getElementById("lien-bible").href = LIEN_BIBLE;
+  if (EGLISE.nom) {
+    document.getElementById("eglise-nom").textContent = EGLISE.nom;
+    document.getElementById("eglise-infos").textContent = EGLISE.infos;
+    if (EGLISE.lien) {
+      const a = document.getElementById("eglise-lien");
+      a.href = EGLISE.lien; a.hidden = false;
+    }
+    document.getElementById("eglise").hidden = false;
+  }
 </script>
 <script>
   if ("serviceWorker" in navigator) {
