@@ -1,0 +1,222 @@
+<!doctype html>
+<html lang="fr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Découvrir Jésus</title>
+<meta name="description" content="Découvrir Jésus : des vidéos sur Instagram ou la Bible, en un clic.">
+<meta name="theme-color" content="#0e1a1f">
+<link rel="manifest" href="manifest.json">
+<link rel="icon" href="icon.svg" type="image/svg+xml">
+<link rel="apple-touch-icon" href="icon.svg">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-title" content="Découvrir Jésus">
+<style>:root{padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)} body{margin:0} img{max-width:100%} [hidden]{display:none!important}</style>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Literata:opsz,wght@7..72,500;7..72,700&family=Figtree:wght@400;500;600&display=swap">
+<style>
+  /* Layout: une colonne étroite, deux grandes « portes » à toucher du pouce, puis des lectures courtes. */
+  :root {
+    --bg: #eef3f5;          /* ciel du matin */
+    --surface: #ffffff;
+    --ink: #14262e;
+    --muted: #4d6670;
+    --line: #cfdde2;
+    --gold: #a86a00;        /* lumière de l'aube */
+    --gold-soft: #f6e6c4;
+    --insta: #b4235a;
+    --insta-soft: #f8dfe8;
+    --font-display: "Literata", Georgia, "Times New Roman", serif;
+    --font-body: "Figtree", system-ui, -apple-system, "Segoe UI", sans-serif;
+  }
+  @media (prefers-color-scheme: dark) {
+    :root:not([data-theme="light"]) {
+      --bg: #0e1a1f; --surface: #15262d; --ink: #e9f1f3; --muted: #9db3bb; --line: #27404a;
+      --gold: #f0b54a; --gold-soft: #3a2f17; --insta: #ff7aa8; --insta-soft: #3d1f2b;
+      color-scheme: dark;
+    }
+  }
+  :root[data-theme="dark"] {
+    --bg: #0e1a1f; --surface: #15262d; --ink: #e9f1f3; --muted: #9db3bb; --line: #27404a;
+    --gold: #f0b54a; --gold-soft: #3a2f17; --insta: #ff7aa8; --insta-soft: #3d1f2b;
+    color-scheme: dark;
+  }
+  * { box-sizing: border-box; }
+  body {
+    background: var(--bg); color: var(--ink);
+    font-family: var(--font-body); font-size: 17px; line-height: 1.55;
+    background-image: radial-gradient(120% 60% at 50% -10%, var(--gold-soft), transparent 60%);
+    background-repeat: no-repeat;
+    min-height: 100%;
+  }
+  .wrap {
+    max-width: 34rem; margin: 0 auto;
+    padding-left: max(16px, env(safe-area-inset-left, 0px));
+    padding-right: max(16px, env(safe-area-inset-right, 0px));
+    padding-block: 3rem 2.5rem;
+    display: flex; flex-direction: column; gap: 2.25rem;
+  }
+  .hero { display: flex; flex-direction: column; gap: .75rem; }
+  .eyebrow {
+    margin: 0; font-size: .8rem; font-weight: 600; letter-spacing: .14em; text-transform: uppercase; color: var(--gold);
+  }
+  h1 {
+    margin: 0; font-family: var(--font-display); font-weight: 700;
+    font-size: clamp(2rem, 7vw, 2.75rem); line-height: 1.1; letter-spacing: -.01em; text-wrap: balance;
+  }
+  .lead { margin: 0; color: var(--muted); font-size: 1.08rem; max-width: 30rem; }
+
+  .doors { display: flex; flex-direction: column; gap: .9rem; }
+  .door {
+    display: flex; align-items: center; gap: 1rem;
+    padding: 1.15rem 1.2rem; border-radius: 18px;
+    background: var(--surface); color: var(--ink); text-decoration: none;
+    border: 1.5px solid var(--line);
+    transition: transform .15s ease, border-color .15s ease, box-shadow .15s ease;
+  }
+  .door svg {
+    flex: none; width: 3rem; height: 3rem; padding: .65rem; border-radius: 14px;
+    fill: none; stroke: currentColor; stroke-width: 1.8; stroke-linecap: round; stroke-linejoin: round;
+  }
+  .door svg .dot { fill: currentColor; stroke: none; }
+  .door-insta svg { color: var(--insta); background: var(--insta-soft); }
+  .door-bible svg { color: var(--gold); background: var(--gold-soft); }
+  .door-text { display: flex; flex-direction: column; min-width: 0; flex: 1; }
+  .door-title { font-weight: 600; font-size: 1.15rem; }
+  .door-sub { color: var(--muted); font-size: .95rem; }
+  .arrow { font-size: 1.3rem; color: var(--muted); transition: transform .15s ease; }
+  .door:hover, .door:focus-visible { transform: translateY(-2px); box-shadow: 0 10px 24px -14px rgba(20, 38, 46, .45); }
+  .door-insta:hover, .door-insta:focus-visible { border-color: var(--insta); }
+  .door-bible:hover, .door-bible:focus-visible { border-color: var(--gold); }
+  .door:hover .arrow, .door:focus-visible .arrow { transform: translateX(3px); }
+  a:focus-visible { outline: 3px solid var(--gold); outline-offset: 3px; }
+
+  .start { display: flex; flex-direction: column; gap: .5rem; }
+  h2 { margin: 0; font-family: var(--font-display); font-weight: 500; font-size: 1.45rem; text-wrap: balance; }
+  .hint { margin: 0; color: var(--muted); font-size: .95rem; }
+  .readings { list-style: none; margin: .5rem 0 0; padding: 0; border-top: 1px solid var(--line); }
+  .readings li { border-bottom: 1px solid var(--line); }
+  .readings a {
+    display: flex; flex-wrap: wrap; justify-content: space-between; align-items: baseline; gap: .25rem 1rem;
+    padding: .85rem .1rem; color: var(--ink); text-decoration: none;
+  }
+  .readings a:hover .ref { color: var(--gold); }
+  .ref { font-family: var(--font-display); font-weight: 700; font-variant-numeric: tabular-nums; transition: color .15s ease; }
+  .what { color: var(--muted); font-size: .95rem; }
+
+  .who { display: flex; flex-direction: column; gap: .7rem; }
+  .who p { margin: 0; max-width: 65ch; }
+  .church {
+    display: flex; flex-direction: column; gap: .4rem;
+    padding: 1.2rem; border-radius: 18px; background: var(--surface); border: 1.5px solid var(--line);
+  }
+  .church p { margin: 0; }
+  .church-name { font-weight: 600; font-size: 1.1rem; }
+  .church-info { color: var(--muted); }
+  .church-link { color: var(--gold); font-weight: 600; text-decoration: none; align-self: flex-start; }
+  .church-link:hover { text-decoration: underline; }
+  .verse { margin: 0; padding: 1.4rem 0 0; border-top: 2px solid var(--gold); }
+  .verse p { margin: 0 0 .5rem; font-family: var(--font-display); font-size: 1.3rem; line-height: 1.4; text-wrap: balance; }
+  .verse cite { font-style: normal; font-size: .85rem; letter-spacing: .04em; color: var(--muted); }
+
+  .foot { color: var(--muted); font-size: .85rem; }
+
+  @media (prefers-reduced-motion: reduce) {
+    .door, .arrow, .ref { transition: none; }
+    .door:hover, .door:focus-visible { transform: none; }
+  }
+</style>
+</head>
+<body>
+<main class="wrap">
+  <header class="hero">
+    <p class="eyebrow">Bienvenue</p>
+    <h1>Tu as déjà entendu parler de Jésus&nbsp;?</h1>
+    <p class="lead">Pas besoin de tout connaître pour commencer. Choisis une porte&nbsp;: des vidéos courtes sur Instagram, ou la Bible directement.</p>
+  </header>
+
+  <nav class="doors" aria-label="Choisir où aller">
+    <a class="door door-insta" id="lien-instagram" href="https://www.instagram.com/loubryjoy/" target="_blank" rel="noopener">
+      <svg viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="3" width="18" height="18" rx="5"/><circle cx="12" cy="12" r="4.2"/><circle cx="17.4" cy="6.6" r="1" class="dot"/></svg>
+      <span class="door-text">
+        <span class="door-title">Voir sur Instagram</span>
+        <span class="door-sub">Versets et messages en vidéo</span>
+      </span>
+      <span class="arrow" aria-hidden="true">→</span>
+    </a>
+    <a class="door door-bible" id="lien-bible" href="https://www.biblegateway.com/passage/?search=Jean+1&amp;version=LSG" target="_blank" rel="noopener">
+      <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 4.5h10.5a3 3 0 0 1 3 3V20H8a3 3 0 0 1-3-3z"/><path d="M5 17a3 3 0 0 1 3-3h10.5"/><path d="M11.5 7v5M9.5 9h4"/></svg>
+      <span class="door-text">
+        <span class="door-title">Lire la Bible</span>
+        <span class="door-sub">On commence par l'Évangile de Jean</span>
+      </span>
+      <span class="arrow" aria-hidden="true">→</span>
+    </a>
+  </nav>
+
+  <section class="who" aria-labelledby="titre-qui">
+    <h2 id="titre-qui">Qui est Jésus&nbsp;?</h2>
+    <p>Jésus a vécu il y a environ 2&nbsp;000 ans en Israël. Il guérissait les malades, mangeait avec les exclus et parlait de Dieu comme d'un Père qui aime.</p>
+    <p>Les chrétiens croient qu'il est le Fils de Dieu. Il est mort sur une croix, puis il est ressuscité le troisième jour. Par lui, Dieu offre le pardon et une vie nouvelle à tous, quel que soit leur passé.</p>
+    <p>Il n'y a pas de formule compliquée. On peut lui parler simplement, avec ses propres mots, comme à quelqu'un qui écoute.</p>
+  </section>
+
+  <section class="start" aria-labelledby="titre-debut">
+    <h2 id="titre-debut">Par où commencer&nbsp;?</h2>
+    <p class="hint">Quatre passages courts, choisis pour quelqu'un qui découvre.</p>
+    <ul class="readings">
+      <li><a href="https://www.biblegateway.com/passage/?search=Jean+3%3A16-17&amp;version=LSG" target="_blank" rel="noopener"><span class="ref">Jean 3.16–17</span><span class="what">Pourquoi Jésus est venu</span></a></li>
+      <li><a href="https://www.biblegateway.com/passage/?search=Luc+15%3A11-32&amp;version=LSG" target="_blank" rel="noopener"><span class="ref">Luc 15.11–32</span><span class="what">Le fils qui revient chez son père</span></a></li>
+      <li><a href="https://www.biblegateway.com/passage/?search=Psaume+23&amp;version=LSG" target="_blank" rel="noopener"><span class="ref">Psaume 23</span><span class="what">« L'Éternel est mon berger »</span></a></li>
+      <li><a href="https://www.biblegateway.com/passage/?search=Matthieu+11%3A28-30&amp;version=LSG" target="_blank" rel="noopener"><span class="ref">Matthieu 11.28–30</span><span class="what">Une invitation au repos</span></a></li>
+    </ul>
+  </section>
+
+  <section class="church" id="eglise" aria-labelledby="titre-eglise" hidden>
+    <h2 id="titre-eglise">Rencontrer des chrétiens près de chez toi</h2>
+    <p class="church-name" id="eglise-nom"></p>
+    <p class="church-info" id="eglise-infos"></p>
+    <a class="church-link" id="eglise-lien" href="#" target="_blank" rel="noopener" hidden>Voir l'église →</a>
+  </section>
+
+  <blockquote class="verse">
+    <p>« Venez à moi, vous tous qui êtes fatigués et chargés, et je vous donnerai du repos. »</p>
+    <cite>Matthieu 11.28 · Louis Segond</cite>
+  </blockquote>
+
+  <footer class="foot">Gratuit, sans inscription. Les liens s'ouvrent dans un nouvel onglet.</footer>
+</main>
+
+<script>
+  // ===== À PERSONNALISER =====
+  // Remplace par l'adresse de ton compte Instagram, par ex. "https://www.instagram.com/tonpseudo/"
+  const LIEN_INSTAGRAM = "https://www.instagram.com/loubryjoy/";
+  // Lien du bouton « Lire la Bible »
+  const LIEN_BIBLE = "https://www.biblegateway.com/passage/?search=Jean+1&version=LSG";
+  // Église locale (laisse "nom" vide pour cacher cette partie)
+  const EGLISE = {
+    nom: "",      // ex. "Église évangélique de ..."
+    infos: "",    // ex. "12 rue ..., 75000 Paris · Culte le dimanche à 10h30"
+    lien: ""      // ex. site web ou page Google Maps
+  };
+  // ===========================
+  document.getElementById("lien-instagram").href = LIEN_INSTAGRAM;
+  document.getElementById("lien-bible").href = LIEN_BIBLE;
+  if (EGLISE.nom) {
+    document.getElementById("eglise-nom").textContent = EGLISE.nom;
+    document.getElementById("eglise-infos").textContent = EGLISE.infos;
+    if (EGLISE.lien) {
+      const a = document.getElementById("eglise-lien");
+      a.href = EGLISE.lien; a.hidden = false;
+    }
+    document.getElementById("eglise").hidden = false;
+  }
+</script>
+<script>
+  if ("serviceWorker" in navigator) {
+    navigator.serviceWorker.register("sw.js").catch(() => {});
+  }
+</script>
+</body>
+</html>

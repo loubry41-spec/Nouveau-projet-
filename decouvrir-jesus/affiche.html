@@ -1,0 +1,65 @@
+<!doctype html>
+<html lang="fr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Affiche QR · Découvrir Jésus</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Literata:opsz,wght@7..72,700&family=Figtree:wght@400;600&display=swap">
+<script src="qrcode.js"></script>
+<style>
+  :root { --ink: #14262e; --muted: #4d6670; --gold: #a86a00; --bg: #ffffff; }
+  * { box-sizing: border-box; }
+  body { margin: 0; background: #e6ecef; color: var(--ink); font-family: "Figtree", system-ui, sans-serif; }
+  .tools { display: flex; flex-wrap: wrap; gap: .6rem; justify-content: center; padding: 1rem 16px; }
+  .tools input { flex: 1 1 22rem; max-width: 34rem; padding: .6rem .8rem; font: inherit; border: 1px solid #b9c9cf; border-radius: 10px; }
+  .tools button { padding: .6rem 1.1rem; font: inherit; font-weight: 600; border: 0; border-radius: 10px; background: var(--ink); color: #fff; cursor: pointer; }
+  .page {
+    width: min(210mm, 100% - 32px); aspect-ratio: 210 / 297; margin: 0 auto 2rem; background: var(--bg);
+    display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 2.2rem;
+    padding: 10% 8%; text-align: center; box-shadow: 0 10px 40px -20px rgba(0,0,0,.4);
+  }
+  .eyebrow { margin: 0; font-weight: 600; letter-spacing: .16em; text-transform: uppercase; color: var(--gold); font-size: clamp(.8rem, 2.2vw, 1.1rem); }
+  h1 { margin: 0; font-family: "Literata", Georgia, serif; font-size: clamp(1.8rem, 6vw, 3.4rem); line-height: 1.1; text-wrap: balance; }
+  #qr { padding: 1rem; border: 3px solid var(--gold); border-radius: 18px; background: #fff; }
+  #qr svg { display: block; width: clamp(160px, 45vw, 320px); height: auto; }
+  .scan { margin: 0; font-size: clamp(1rem, 2.8vw, 1.4rem); }
+  .url { margin: 0; color: var(--muted); font-size: clamp(.75rem, 2vw, .95rem); word-break: break-all; }
+  @media print {
+    @page { size: A4; margin: 0; }
+    body { background: #fff; }
+    .tools { display: none; }
+    .page { width: 210mm; height: 297mm; margin: 0; box-shadow: none; }
+  }
+</style>
+</head>
+<body>
+  <div class="tools">
+    <input id="adresse" type="url" aria-label="Adresse de l'application">
+    <button id="imprimer" type="button">Imprimer l'affiche</button>
+  </div>
+  <div class="page">
+    <p class="eyebrow">Bienvenue</p>
+    <h1>Tu as déjà entendu parler de Jésus&nbsp;?</h1>
+    <div id="qr"></div>
+    <p class="scan">Scanne avec l'appareil photo de ton téléphone</p>
+    <p class="url" id="url-texte"></p>
+  </div>
+<script>
+  const champ = document.getElementById("adresse");
+  // Adresse publique de l'application (GitHub Pages). Change-la si tu héberges l'app ailleurs.
+  const ADRESSE_PUBLIQUE = "https://loubry41-spec.github.io/Nouveau-projet-/decouvrir-jesus/";
+  champ.value = location.hostname.endsWith("github.io") ? new URL("./", location.href).href : ADRESSE_PUBLIQUE;
+  const zone = document.getElementById("qr");
+  function dessiner() {
+    const qr = qrcode(0, "M");
+    qr.addData(champ.value);
+    qr.make();
+    zone.innerHTML = qr.createSvgTag({ cellSize: 8, margin: 0, scalable: true });
+    document.getElementById("url-texte").textContent = champ.value;
+  }
+  champ.addEventListener("input", dessiner);
+  document.getElementById("imprimer").addEventListener("click", () => window.print());
+  dessiner();
+</script>
+</body>
+</html>
