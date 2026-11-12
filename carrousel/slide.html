@@ -1,0 +1,127 @@
+<!doctype html>
+<html lang="fr">
+<head>
+<meta charset="utf-8">
+<title>Slide</title>
+<link rel="stylesheet" href="fonts/fonts.css">
+<style>
+  :root {
+    --noir: #04060c;
+    --bleu: #2f8cff;
+    --bleu-vif: #5fb0ff;
+    --blanc: #f7f9ff;
+    --pad: 84px;
+  }
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  html, body { width: 1080px; height: 1350px; background: var(--noir); overflow: hidden; }
+  body { font-family: "Inter", sans-serif; color: var(--blanc); -webkit-font-smoothing: antialiased; }
+
+  .slide { position: relative; width: 1080px; height: 1350px; overflow: hidden; background: var(--noir); }
+
+  /* --- Image de fond + étalonnage cinéma --- */
+  .bg { position: absolute; inset: 0; background-size: cover; background-position: center; }
+  .grade { position: absolute; inset: 0; }
+  .grade.vignette { background: radial-gradient(ellipse 85% 70% at 50% 42%, transparent 45%, rgba(2,4,10,.75) 100%); }
+  .grade.top { background: linear-gradient(180deg, rgba(2,4,10,.78) 0%, rgba(2,4,10,0) 20%); }
+  .grade.bottom { background: linear-gradient(0deg, rgba(2,4,10,.97) 0%, rgba(2,4,10,.88) 26%, rgba(2,4,10,.4) 44%, rgba(2,4,10,0) 58%); }
+  .slide.final .grade.bottom { background: linear-gradient(0deg, rgba(2,4,10,.98) 0%, rgba(2,4,10,.92) 40%, rgba(2,4,10,.4) 60%, rgba(2,4,10,0) 72%); }
+  .grade.teinte { background: radial-gradient(ellipse 70% 40% at 50% 100%, rgba(47,140,255,.16), transparent 70%); mix-blend-mode: screen; }
+  .grain { position: absolute; inset: 0; opacity: .09; mix-blend-mode: overlay; }
+
+  /* --- En-tête --- */
+  .header { position: absolute; top: 64px; left: var(--pad); right: var(--pad); display: flex; align-items: center; gap: 22px;
+            font-weight: 600; font-size: 21px; letter-spacing: .3em; text-transform: uppercase; }
+  .header .num { color: var(--blanc); opacity: .9; white-space: nowrap; }
+  .header .num b { color: var(--bleu-vif); font-weight: 700; }
+  .header .ligne { flex: 1; height: 1px; background: linear-gradient(90deg, rgba(255,255,255,.55), rgba(255,255,255,.08)); }
+  .header .theme { color: var(--bleu-vif); white-space: nowrap; text-shadow: 0 0 18px rgba(47,140,255,.6); }
+
+  /* --- Bloc texte --- */
+  .texte { position: absolute; left: var(--pad); right: var(--pad); bottom: 148px; }
+  .titre { font-family: "Anton", sans-serif; font-weight: 400; text-transform: uppercase; line-height: .98; letter-spacing: .005em;
+           color: var(--blanc); text-shadow: 0 4px 40px rgba(0,0,0,.7); }
+  .titre .l { display: block; white-space: nowrap; }
+  .hl { color: var(--bleu); text-shadow: 0 0 24px rgba(47,140,255,.85), 0 0 70px rgba(47,140,255,.5); }
+  .titre .hl { color: #3d95ff; }
+
+  .accent { width: 84px; height: 5px; background: var(--bleu); border-radius: 3px; margin: 40px 0 30px;
+            box-shadow: 0 0 18px rgba(47,140,255,.9), 0 0 40px rgba(47,140,255,.5); }
+  .sous { font-size: 40px; font-weight: 500; line-height: 1.3; color: rgba(247,249,255,.94); }
+  .sous .hl { font-weight: 700; }
+  .citation { font-family: "Cormorant Garamond", serif; font-style: italic; font-weight: 500; font-size: 37px; line-height: 1.25;
+              color: rgba(247,249,255,.88); margin-top: 26px; max-width: 880px; }
+  .ref { display: inline-flex; align-items: center; gap: 16px; margin-top: 34px; font-size: 23px; font-weight: 700;
+         letter-spacing: .26em; text-transform: uppercase; color: var(--bleu-vif); }
+  .ref::before { content: ""; width: 38px; height: 2px; background: var(--bleu-vif); box-shadow: 0 0 10px rgba(47,140,255,.9); }
+
+  /* --- Pied --- */
+  .footer { position: absolute; left: var(--pad); right: var(--pad); bottom: 70px; display: flex; align-items: center; justify-content: space-between; }
+  .dots { display: flex; gap: 10px; }
+  .dots i { width: 10px; height: 10px; border-radius: 5px; background: rgba(255,255,255,.28); }
+  .dots i.on { width: 38px; background: var(--bleu); box-shadow: 0 0 14px rgba(47,140,255,.9); }
+  .swipe { font-size: 20px; font-weight: 600; letter-spacing: .3em; text-transform: uppercase; color: rgba(247,249,255,.8);
+           display: flex; align-items: center; gap: 14px; }
+  .swipe svg { width: 40px; height: 16px; }
+</style>
+</head>
+<body>
+<div class="slide" id="slide">
+  <div class="bg" id="bg"></div>
+  <div class="grade teinte"></div>
+  <div class="grade vignette"></div>
+  <div class="grade top"></div>
+  <div class="grade bottom"></div>
+  <svg class="grain" width="1080" height="1350"><filter id="n"><feTurbulence type="fractalNoise" baseFrequency=".85" numOctaves="3" stitchTiles="stitch"/><feColorMatrix type="saturate" values="0"/></filter><rect width="100%" height="100%" filter="url(#n)"/></svg>
+
+  <div class="header">
+    <span class="num" id="num"></span>
+    <span class="ligne"></span>
+    <span class="theme" id="theme"></span>
+  </div>
+
+  <div class="texte" id="texte"></div>
+
+  <div class="footer">
+    <div class="dots" id="dots"></div>
+    <div class="swipe" id="swipe"></div>
+  </div>
+</div>
+
+<script src="slides.js"></script>
+<script>
+  const n = Math.max(1, Math.min(6, parseInt(new URLSearchParams(location.search).get("n") || "1", 10)));
+  const s = SLIDES[n - 1];
+  const fmt = (t) => t.replace(/\[([^\]]+)\]/g, '<span class="hl">$1</span>');
+  const lignes = (t) => t.split("|").map((l) => `<span class="l">${fmt(l)}</span>`).join("");
+
+  document.getElementById("slide").classList.toggle("final", !!s.final);
+  document.getElementById("bg").style.backgroundImage = `url("${s.image}")`;
+  if (s.position) document.getElementById("bg").style.backgroundPosition = s.position;
+  document.getElementById("num").innerHTML = `<b>0${n}</b> / 06`;
+  document.getElementById("theme").textContent = s.theme;
+
+  let html = `<h1 class="titre" id="titre">${lignes(s.titre)}</h1><div class="accent"></div>`;
+  if (s.sous) html += `<p class="sous">${s.sous.split("|").map(fmt).join("<br>")}</p>`;
+  if (s.citation) html += `<p class="citation">${s.citation}</p>`;
+  html += `<div class="ref">${s.ref}</div>`;
+  document.getElementById("texte").innerHTML = html;
+
+  document.getElementById("dots").innerHTML = SLIDES.map((_, i) => `<i class="${i === n - 1 ? "on" : ""}"></i>`).join("");
+  document.getElementById("swipe").innerHTML = s.final
+    ? "Partage à quelqu’un"
+    : `Glisse <svg viewBox="0 0 40 16" fill="none" stroke="#5fb0ff" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M2 8h34M29 2l7 6-7 6"/></svg>`;
+
+  // Ajuste la taille du titre : le plus grand possible sans déborder en largeur ni en hauteur.
+  document.fonts.ready.then(() => {
+    const titre = document.getElementById("titre");
+    const maxW = 1080 - 2 * 84;
+    const maxH = s.final ? 300 : 410;
+    let size = s.final ? 96 : 150;
+    const fits = () => [...titre.children].every((l) => l.scrollWidth <= maxW) && titre.offsetHeight <= maxH;
+    titre.style.fontSize = size + "px";
+    while (!fits() && size > 40) { size -= 2; titre.style.fontSize = size + "px"; }
+    document.body.dataset.ready = "1";
+  });
+</script>
+</body>
+</html>
