@@ -280,6 +280,6 @@ export const couvertures = [
   { id: 'R02', titre: 'Ce que tu supprimes\nrevient ==toujours==', sousTitre: 'La honte, le secret, le pardon' },
   { id: 'R03', titre: 'Tu as arrêté\nde **prier** quand ?', sousTitre: 'Le Père qui court' },
   { id: 'R04', titre: 'Il avait **juré**\nde ne jamais le trahir', sousTitre: 'L\'histoire de Pierre' },
-  { id: 'R05', titre: 'Tout repose sur\nun tombeau ==vide==', sousTitre: 'Jésus est-il vraiment ressuscité ?' },
+  { id: 'R05', titre: 'Tout repose sur\nun tombeau ==vide==', sousTitre: 'Jésus est-il vraiment ressuscité ?', voile: 0.7 },
   { id: 'R06', titre: 'Une seule\n**phrase**', sousTitre: 'L\'homme crucifié à côté de Jésus' },
 ]

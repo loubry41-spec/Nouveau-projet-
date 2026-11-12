@@ -16,6 +16,7 @@ Ce dépôt contient **deux semaines de publications prêtes à produire**, la ch
 | `temoignages/guide-temoignage.md` | Comment recueillir de **vrais** témoignages (consentement, questions, formats). |
 | `references-bibliques.md` | Le texte exact de chaque verset cité (Louis Segond 1910), pour vérifier avant publication. |
 | `visuels/rendu/` | **Les images prêtes à publier** : 36 diapositives de carrousel (1080 × 1350) et 6 couvertures de Reels (1080 × 1920). |
+| `visuels/photos/` | Les 33 photos de fond (générées par IA, sans croix ni représentation de Jésus). |
 
 ### Les 6 Reels
 
@@ -55,7 +56,8 @@ Ce dépôt contient **deux semaines de publications prêtes à produire**, la ch
 Toutes les diapositives et couvertures viennent d'un seul fichier : `visuels/contenus.mjs`.
 
 * `**mot**` affiche le mot en **doré**, `==mot==` en **bleu fluorescent**, `\n` fait un retour à la ligne.
-* Pour ajouter une photo de fond à une diapositive : place l'image dans `visuels/photos/` et ajoute `photo: 'photos/mon-image.jpg'` à la diapositive (elle sera assombrie automatiquement).
+* **Photos de fond :** le générateur prend automatiquement `visuels/photos/C01-04.jpg` pour la diapositive 4 du carrousel C01, et `visuels/photos/R01.jpg` pour la couverture du Reel R01. Pour changer une photo, remplace simplement le fichier (une photo gratuite de Pexels ou Unsplash convient très bien) puis régénère. Les diapositives sans photo restent sur fond noir.
+* Pour assombrir davantage une photo trop claire : ajoute `voile: 0.75` à la diapositive ou à la couverture (0 = pas de voile, 1 = noir).
 * Pour afficher ton nom de compte en bas des visuels : renseigne `compte` en haut du fichier.
 
 Puis régénère (nécessite Node.js et Playwright) :

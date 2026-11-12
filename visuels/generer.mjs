@@ -44,7 +44,8 @@ body{width:var(--w);height:var(--h);overflow:hidden;color:var(--blanc);
   font-family:'Playfair Display',Didot,'GFS Didot',Georgia,serif;
   -webkit-font-smoothing:antialiased;position:relative}
 .photo{position:absolute;inset:0;background-size:cover;background-position:center}
-.photo::after{content:'';position:absolute;inset:0;background:rgba(5,5,5,var(--voile,.62))}
+.photo::after{content:'';position:absolute;inset:0;background:rgba(5,5,5,var(--voile,.64))}
+.avec-photo .contenu{text-shadow:0 2px 24px rgba(0,0,0,.75)}
 .cadre{position:absolute;left:var(--mx);right:var(--mx);top:var(--top);bottom:var(--bas);
   display:flex;align-items:center;justify-content:center}
 .contenu{width:100%;text-align:center;text-wrap:balance;--u:calc(var(--s,1) * 1px);font-variant-numeric:lining-nums}
@@ -65,12 +66,12 @@ body{width:var(--w);height:var(--h);overflow:hidden;color:var(--blanc);
 .couv .sous{font-size:calc(32 * var(--u));letter-spacing:.2em;text-transform:uppercase;color:var(--or);margin-top:calc(64 * var(--u));font-weight:500;line-height:1.5}
 `
 
-const page = ({ w, h, mx, top, bas, classe, corps, extra = '', photo }) => `<!doctype html>
+const page = ({ w, h, mx, top, bas, classe, corps, extra = '', photo, voile }) => `<!doctype html>
 <html lang="fr"><head><meta charset="utf-8">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,500;0,600;1,400&family=Playfair+Display+SC:wght@500&display=block" rel="stylesheet">
 <style>${css}</style></head>
-<body style="--w:${w}px;--h:${h}px;--mx:${mx}px;--top:${top}px;--bas:${bas}px">
+<body class="${photo ? 'avec-photo' : ''}" style="--w:${w}px;--h:${h}px;--mx:${mx}px;--top:${top}px;--bas:${bas}px${voile ? `;--voile:${voile}` : ''}">
 ${photo ? `<div class="photo" style="background-image:url('${photo}')"></div>` : ''}
 <div class="cadre"><div class="contenu ${classe}">${corps}</div></div>
 ${extra}
@@ -86,7 +87,7 @@ const diapoHtml = (d, i, total) => {
   const extra =
     `<div class="pager">${i + 1} / ${total}</div>` +
     (compte ? `<div class="compte">${echapper(compte)}</div>` : '')
-  return page({ w: 1080, h: 1350, mx: 100, top: 110, bas: 130, classe, corps: blocs.join(''), extra, photo: d.photo })
+  return page({ w: 1080, h: 1350, mx: 100, top: 110, bas: 130, classe, corps: blocs.join(''), extra, photo: d.photo, voile: d.voile })
 }
 
 const couvertureHtml = (c) =>
@@ -98,6 +99,7 @@ const couvertureHtml = (c) =>
     corps: `<p class="texte"${c.taille ? ` style="font-size:calc(${112 * c.taille} * var(--u))"` : ''}>${enHtml(c.titre)}</p>${c.sousTitre ? `<p class="sous">${enHtml(c.sousTitre)}</p>` : ''}`,
     extra: compte ? `<div class="compte" style="bottom:300px">${echapper(compte)}</div>` : '',
     photo: c.photo,
+    voile: c.voile ?? 0.55,
   })
 
 // Réduit la taille du texte jusqu'à ce qu'il tienne dans le cadre.
@@ -113,6 +115,13 @@ async function ajuster(p) {
       contenu.style.setProperty('--s', s)
     }
   })
+}
+
+// Photo trouvée automatiquement : visuels/photos/C01-04.jpg (diapositive 4 de C01), photos/R01.jpg (couverture).
+function photoAuto(nom) {
+  for (const ext of ['jpg', 'jpeg', 'png', 'webp']) {
+    if (existsSync(join(ici, 'photos', `${nom}.${ext}`))) return `photos/${nom}.${ext}`
+  }
 }
 
 // Les photos locales sont intégrées en data URI pour fonctionner partout.
@@ -170,7 +179,7 @@ for (const c of carrousels) {
   if (filtre && filtre !== c.id) continue
   const dossier = join(ici, 'rendu', `${c.id}-${c.slug}`)
   for (const [i, d] of c.diapos.entries()) {
-    const html = diapoHtml({ ...d, photo: photoUrl(d.photo) }, i, c.diapos.length)
+    const html = diapoHtml({ ...d, photo: photoUrl(d.photo ?? photoAuto(`${c.id}-${String(i + 1).padStart(2, '0')}`)) }, i, c.diapos.length)
     await capturer(html, 1080, 1350, join(dossier, `${String(i + 1).padStart(2, '0')}.png`))
   }
   writeFileSync(join(racine, 'carrousels', `${c.id}-${c.slug}.md`), ficheMarkdown(c))
@@ -179,7 +188,7 @@ for (const c of carrousels) {
 
 for (const c of couvertures) {
   if (filtre && filtre !== c.id) continue
-  await capturer(couvertureHtml({ ...c, photo: photoUrl(c.photo) }), 1080, 1920, join(ici, 'rendu', 'couvertures-reels', `${c.id}.png`))
+  await capturer(couvertureHtml({ ...c, photo: photoUrl(c.photo ?? photoAuto(c.id)) }), 1080, 1920, join(ici, 'rendu', 'couvertures-reels', `${c.id}.png`))
   console.log(`✓ couverture ${c.id}`)
 }
 
